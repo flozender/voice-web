@@ -70,7 +70,7 @@ const BASE_CONFIG: CommonVoiceConfig = {
   MYSQLREPLICAPORT: configEntry('CV_MYSQLREPLICAPORT', 3306, castInt),
   BUCKET_NAME: configEntry('CV_BUCKET_NAME', 'common-voice-corpus'),
   BUCKET_LOCATION: configEntry('CV_BUCKET_LOCATION', ''),
-  ENVIRONMENT: configEntry('ENVIRONMENT', 'default'),
+  ENVIRONMENT: configEntry('CV_ENVIRONMENT', 'default'),
   SECRET: configEntry('CV_SECRET', 'super-secure-secret'),
   ADMIN_EMAILS: configEntry('CV_ADMIN_EMAILS', null),
   S3_CONFIG: configEntry(
@@ -160,7 +160,7 @@ export function getConfig(): CommonVoiceConfig {
     let config_path = process.env.SERVER_CONFIG_PATH || './config.json';
     fileConfig = JSON.parse(fs.readFileSync(config_path, 'utf-8'));
   } catch (err) {
-    console.error(err, 'could not load config.json, using defaults');
+    console.error(`Could not load config.json, using defaults (error message: ${err.message})`);
   }
   loadedConfig = { ...BASE_CONFIG, ...loadedSecrets, ...fileConfig };
 
